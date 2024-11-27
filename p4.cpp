@@ -35,7 +35,7 @@ void kruskalMST(int n, vector<Edge> &edges) {
 
     vector<int> parent(n), rank(n, 0);
     for (int i = 0; i < n; i++) {
-        parent[i] = i; // Initialize parent array for disjoint sets
+        parent[i] = i; 
     }
 
     int totalWeight = 0;
@@ -79,7 +79,7 @@ int main() {
                 cin >> n;
                 cout << "Enter number of edges: ";
                 cin >> m;
-                edges.resize(m); // Resize the edges vector based on number of edges
+                edges.resize(m);
                 break;
 
             case 2:
@@ -91,9 +91,9 @@ int main() {
                         cout << "Edge " << i + 1 << ": ";
                         cin >> edges[i].u >> edges[i].v >> edges[i].weight;
 
-                        // Convert 1-based input to 0-based indexing
-                        edges[i].u--; // Subtract 1 to make nodes 0-indexed
-                        edges[i].v--; // Subtract 1 to make nodes 0-indexed
+                        
+                        edges[i].u--; 
+                        edges[i].v--; 
                     }
                 }
                 break;
