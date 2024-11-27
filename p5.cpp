@@ -3,10 +3,10 @@ using namespace std;
 
 const int INF = INT_MAX;
 
-// Dijkstra's algorithm implementation
+
 vector<int> dijkstra(int n, vector<pair<int, int>> adj[], int src) {
-    vector<int> dist(n, INF);  // Initialize distances to infinity
-    dist[src] = 0;  // Distance to source is zero
+    vector<int> dist(n, INF);  
+    dist[src] = 0;  
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
     pq.push({0, src});
 
@@ -30,12 +30,12 @@ vector<int> dijkstra(int n, vector<pair<int, int>> adj[], int src) {
         }
     }
 
-    return dist;  // Return the distances from source
+    return dist; 
 }
 
 int main() {
-    int n = 0, m = 0; // Number of nodes and edges
-    vector<pair<int, int>> adj[100]; // Adjust size as needed
+    int n = 0, m = 0; 
+    vector<pair<int, int>> adj[100];
     int source = -1, destination = -1;
 
     while (true) {
@@ -55,7 +55,7 @@ int main() {
                 cin >> n;
                 cout << "Enter number of edges: ";
                 cin >> m;
-                // Clear the adjacency list for new input
+              
                 for (int i = 0; i < n; i++) {
                     adj[i].clear();
                 }
@@ -73,15 +73,15 @@ int main() {
                     cout << "Edge " << (i + 1) << ": ";
                     cin >> u >> v >> w;
 
-                    // Check for valid node numbers
+                 
                     if (u < 0 || u >= n || v < 0 || v >= n) {
                         cout << "Invalid node number. Please enter valid nodes.\n";
-                        i--; // To retry the current edge input
+                        i--; 
                         continue;
                     }
 
                     adj[u].push_back({v, w});
-                    adj[v].push_back({u, w});  // For undirected graph
+                    adj[v].push_back({u, w});  
                 }
                 cout << "Edges input successfully.\n";
                 break;
@@ -92,15 +92,15 @@ int main() {
                 cout << "Enter destination node: ";
                 cin >> destination;
 
-                // Check for valid source and destination
+                
                 if (source < 0 || source >= n || destination < 0 || destination >= n) {
                     cout << "Invalid source or destination. Please set them again.\n";
-                    source = destination = -1; // Reset to invalid state
+                    source = destination = -1; 
                 }
                 break;
 
             case 4: {
-                // Declare dist here, initializing only when calculating shortest path
+                
                 if (source == -1 || destination == -1) {
                     cout << "Please set source and destination first.\n";
                     break;
@@ -108,13 +108,13 @@ int main() {
 
                 vector<int> dist = dijkstra(n, adj, source);
 
-                // Check if the distance to destination is reachable
+               
                 if (dist[destination] != INF) {
                     cout << "Shortest travel time from " << source << " to " << destination << " is: " << dist[destination] << " units\n";
                 } else {
                     cout << "There is no path from " << source << " to " << destination << ".\n";
                 }
-                break; // Break after case 4 to avoid fall-through
+                break; 
             }
 
             case 5:
