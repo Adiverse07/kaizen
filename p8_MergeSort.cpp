@@ -1,88 +1,67 @@
 #include <iostream>
-#define ARR_LEN 5
-
+#include <vector>
 using namespace std;
 
-int* take_input(int* arr, int size){
-    for(int i=0; i<size; i++){
-        int inp;
-        cout << "Digit " << i << ": ";
-        cin >> inp;
-        arr[i] = inp;
-    }
-    return arr;
-}
+void merge(vector<int>& arr, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-int* b_sort(int* arr, int size) {
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = 0; j < size - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-    return arr;
-}
+    vector<int> leftArr(n1), rightArr(n2);
 
-void merge(int* leftArray, int* rightArray, int left_size, int right_size, int* arr) {
-    int i = 0, j = 0, k = 0;
+    for (int i = 0; i < n1; i++)
+        leftArr[i] = arr[left + i];
+    for (int i = 0; i < n2; i++)
+        rightArr[i] = arr[mid + 1 + i];
 
-    while (i < left_size && j < right_size) {
-        if (leftArray[i] <= rightArray[j]) {
-            arr[k++] = leftArray[i++];
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (leftArr[i] <= rightArr[j]) {
+            arr[k] = leftArr[i];
+            i++;
         } else {
-            arr[k++] = rightArray[j++];
+            arr[k] = rightArr[j];
+            j++;
         }
+        k++;
     }
 
-    while (i < left_size) {
-        arr[k++] = leftArray[i++];
+    while (i < n1) {
+        arr[k] = leftArr[i];
+        i++;
+        k++;
     }
 
-    while (j < right_size) {
-        arr[k++] = rightArray[j++];
-    }
-}
-
-int* merge_sort(int* arr, int size) {
-    if (size <= 1) return arr;
-
-    int mid = size / 2;
-
-    int leftArray[mid];
-    int rightArray[size - mid];
-
-    for (int i = 0; i < mid; i++) {
-        leftArray[i] = arr[i];
-    }
-    for (int i = mid; i < size; i++) {
-        rightArray[i - mid] = arr[i];
-    }
-
-    merge_sort(leftArray, mid);
-    merge_sort(rightArray, size - mid);
-
-    merge(leftArray, rightArray, mid, size - mid, arr);
-
-    return arr;
-}
-
-void display(int* arr, int size){
-    for(int i=0; i<size; i++){
-        cout << arr[i] << " ";
+    while (j < n2) {
+        arr[k] = rightArr[j];
+        j++;
+        k++;
     }
 }
 
-int main(){
+void mergeSort(vector<int>& arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
 
-    cout << ARR_LEN << endl;
-    int inp_arr[ARR_LEN];
-    // display(take_input(inp_arr, ARR_LEN), ARR_LEN);
-    // cout << endl << endl;
-    display(merge_sort(take_input(inp_arr, ARR_LEN), ARR_LEN), ARR_LEN);
-    // display(b_sort(take_input(inp_arr, ARR_LEN), ARR_LEN), ARR_LEN);
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
+}
+
+int main() {
+    vector<int> arr = {12, 11, 13, 5, 6, 7};
+
+    int n = arr.size();
+    cout << "Original array: ";
+    for (int i : arr) cout << i << " ";
+    cout << endl;
+
+    mergeSort(arr, 0, n - 1);
+
+    cout << "Sorted array: ";
+    for (int i : arr) cout << i << " ";
+    cout << endl;
 
     return 0;
 }
